@@ -66,6 +66,7 @@ class ISModel(nn.Module):
 
         image = self.normalization(image)
         return image, prev_mask
+    
 
     def backbone_forward(self, image, coord_features=None, gra=None, text=None, category_label=None):
         """
