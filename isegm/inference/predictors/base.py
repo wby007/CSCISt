@@ -153,7 +153,12 @@ class BasePredictor(object):
         except Exception as e:
             # 如果任何方式都失败，回退到基本调用
             print(f"Warning: Error calling model with specific parameters: {e}")
-            return self.net(image_nd, points_nd)['instances']
+            call_kwargs = {'image': image_nd, 'points': points_nd}
+            sig = inspect.signature(self.net.forward)
+            valid_kwargs = {k: v for k, v in [('gra', gra), ('text', phrase), ('category_label', category_label)] if
+                            k in sig.parameters}
+            call_kwargs.update(valid_kwargs)
+            return self.net(**call_kwargs)['instances']
 
     def apply_transforms(self, image_nd, clicks_lists):
         """应用图像变换"""

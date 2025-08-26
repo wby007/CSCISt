@@ -66,13 +66,18 @@ class ISModel(nn.Module):
 
         image = self.normalization(image)
         return image, prev_mask
-    
 
-    def backbone_forward(self, image, coord_features=None, gra=None, text=None, category_label=None):
-        """
-        基础实现，子类需要重写此方法
-        """
-        raise NotImplementedError
+
+    def backbone_forward(
+        self,
+        image,
+        coord_features=None,
+        gra=None,
+        text=None,
+        category_label=None
+    ):
+        """Base implementation that must be overridden by subclasses"""
+        raise NotImplementedError("Subclasses must implement backbone_forward method")
 
     def get_coord_features(self, image, prev_mask, points):
 
