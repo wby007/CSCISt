@@ -1,24 +1,19 @@
 # [Interactive Image Segmentation Based on Semantic Collaboration of Cross-modal Prior Information](https://openaccess.thecvf.com/content/ICCV2023/html/Liu_SimpleClick_Interactive_Image_Segmentation_with_Simple_Vision_Transformers_ICCV_2023_paper.html)
 
-
-
-## Environment
-Training and evaluation environment: Python3.8.8, PyTorch 1.11.0, Ubuntu 20.4, CUDA 11.0. Run the following command to install required packages.
-```
-pip3 install -r requirements.txt
-```
-You can build a container with the configured environment using our [Dockerfiles](https://github.com/uncbiag/SimpleClick/tree/v1.0/docker). 
-Our Dockerfiles only support CUDA 11.0/11.4/11.6. If you use different CUDA drivers, you need to modify the base image in the Dockerfile (This is annoying that you need a matched image in Dockerfile for your CUDA driver, otherwise the gpu doesn't work in the container. Any better solutions?).
-You also need to configue the paths to the datasets in [config.yml](https://github.com/uncbiag/SimpleClick/blob/v1.0/config.yml) before training or testing.
-
-## Demo
 <p>
   <img src="./assets/img1.png" alt="drawing", width="500"/>
 </p>
 
+
+## Environment
+Run the following command to install required packages.
+```
+pip3 install -r requirements.txt
+```
+## Demo
 An example script to run the demo. 
 ```
-python3 demo.py --checkpoint=./weights/simpleclick_models/cocolvis_vit_huge.pth --gpu 0
+python3 demo.py
 ```
 Some test images can be found [here](https://github.com/uncbiag/SimpleClick/tree/v1.0/assets/test_imgs).
 
