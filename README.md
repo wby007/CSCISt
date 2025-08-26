@@ -1,20 +1,5 @@
-# [SimpleClick: Interactive Image Segmentation with Simple Vision Transformers](https://openaccess.thecvf.com/content/ICCV2023/html/Liu_SimpleClick_Interactive_Image_Segmentation_with_Simple_Vision_Transformers_ICCV_2023_paper.html)
+# [Interactive Image Segmentation Based on Semantic Collaboration of Cross-modal Prior Information](https://openaccess.thecvf.com/content/ICCV2023/html/Liu_SimpleClick_Interactive_Image_Segmentation_with_Simple_Vision_Transformers_ICCV_2023_paper.html)
 
-**University of North Carolina at Chapel Hill**
-
-[Qin Liu](https://sites.google.com/cs.unc.edu/qinliu/home), [Zhenlin Xu](https://wildphoton.github.io/), [Gedas Bertasius](https://www.gedasbertasius.com/), [Marc Niethammer](https://biag.cs.unc.edu/)
-
-ICCV 2023
-
-<p align="center">
-    <a href="https://paperswithcode.com/sota/interactive-segmentation-on-sbd?p=simpleclick-interactive-image-segmentation">
-        <img src="https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/simpleclick-interactive-image-segmentation/interactive-segmentation-on-sbd"/>
-    </a>
-</p>
-
-<p align="center">
-  <img src="./assets/simpleclick_framework.png" alt="drawing", width="650"/>
-</p>
 
 
 ## Environment
@@ -27,8 +12,8 @@ Our Dockerfiles only support CUDA 11.0/11.4/11.6. If you use different CUDA driv
 You also need to configue the paths to the datasets in [config.yml](https://github.com/uncbiag/SimpleClick/blob/v1.0/config.yml) before training or testing.
 
 ## Demo
-<p align="center">
-  <img src="./assets/demo_sheep.gif" alt="drawing", width="500"/>
+<p>
+  <img src="./assets/img1.png" alt="drawing", width="500"/>
 </p>
 
 An example script to run the demo. 
@@ -60,7 +45,7 @@ python train.py models/iter_mask/plainvit_huge448_cocolvis_itermask.py \
 ```
 
 ## Model weights 
-SimpleClick models: [Google Drive](https://drive.google.com/drive/folders/1zVhZefCjsTBxvyxnYMVnbkrNeRCH6y9Y?usp=sharing)
+models: [Google Drive](https://drive.google.com/drive/folders/1zVhZefCjsTBxvyxnYMVnbkrNeRCH6y9Y?usp=sharing)
 
 ## Datasets
 
@@ -68,8 +53,6 @@ We train all our models on SBD and COCO+LVIS and evaluate them on GrabCut, Berke
 
 | Dataset   |                      Description             |           Download Link              |
 |-----------|----------------------------------------------|:------------------------------------:|
-|ADE20k     |  22k images with 434k instances (total)      |  [official site][ADE20k]             |
-|OpenImages |  944k images with 2.6M instances (total)     |  [official site][OpenImages]         |
 |MS COCO    |  118k images with 1.2M instances (train)     |  [official site][MSCOCO]             |
 |LVIS v1.0  |  100k images with 1.2M instances (total)     |  [official site][LVIS]               |
 |COCO+LVIS* |  99k images with 1.5M instances (train)      |  [original LVIS images][LVIS] + <br> [our combined annotations][COCOLVIS_annotation] |
@@ -102,26 +85,8 @@ Don't forget to change the paths to the datasets in [config.yml](config.yml) aft
 pre-processed annotations that are obtained by combining COCO and LVIS dataset into the folder with LVIS v1.0.
 
 
-## Notes
-[03/11/2023] Add an xTiny model.
-
-[10/25/2022] Add docker files.
-
-[10/02/2022] Release the main models. This repository is still under active development.
-
 ## License
 The code is released under the MIT License. It is a short, permissive software license. Basically, you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source. 
 
-## Citation
-```bibtex
-@InProceedings{Liu_2023_ICCV,
-    author    = {Liu, Qin and Xu, Zhenlin and Bertasius, Gedas and Niethammer, Marc},
-    title     = {SimpleClick: Interactive Image Segmentation with Simple Vision Transformers},
-    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
-    month     = {October},
-    year      = {2023},
-    pages     = {22290-22300}
-}
-```
 ## Acknowledgement
 Our project is developed based on [RITM](https://github.com/saic-vul/ritm_interactive_segmentation). Thanks for the nice demo GUI :)
