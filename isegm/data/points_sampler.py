@@ -1,4 +1,4 @@
-import cv2
+﻿import cv2
 import math
 import random
 import numpy as np
@@ -303,3 +303,4 @@ def get_point_candidates(obj_mask, k=1.7, full_prob=0.0):
         click_indx = np.random.choice(len(prob_map), p=prob_map)
         click_coords = np.unravel_index(click_indx, dt.shape)
         return np.array([click_coords])
+

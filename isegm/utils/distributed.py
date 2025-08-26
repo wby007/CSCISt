@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 from torch import distributed as dist
 from torch.utils import data
 
@@ -65,3 +65,4 @@ def get_dp_wrapper(distributed):
             except AttributeError:
                 return getattr(self.module, name)
     return DPWrapper
+

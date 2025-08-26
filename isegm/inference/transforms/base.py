@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 
 
 class BaseTransform(object):
@@ -36,3 +36,4 @@ class SigmoidForPred(BaseTransform):
 
     def set_state(self, state):
         pass
+

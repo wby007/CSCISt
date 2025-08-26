@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import importlib.util
 import os
 
@@ -121,3 +121,4 @@ def load_module(script_path):
 
 if __name__ == '__main__':
     main()
+

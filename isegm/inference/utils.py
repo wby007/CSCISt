@@ -1,4 +1,4 @@
-from datetime import timedelta
+﻿from datetime import timedelta
 from pathlib import Path
 import torch
 import numpy as np
@@ -249,3 +249,4 @@ def get_results_table(noc_list, over_max_list, brs_type, dataset_name, mean_spc,
     wb.save(file_path)
 
     return header, table_row
+

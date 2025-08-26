@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import numpy as np
 from typing import List
 from isegm.inference.clicker import Click
@@ -188,3 +188,4 @@ def check_object_roi(object_roi, clicks_list):
                 return False
 
     return True
+

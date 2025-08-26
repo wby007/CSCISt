@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import numpy as np
 
 from .log import logger
@@ -98,3 +98,4 @@ def get_labels_with_sizes(x):
     labels = np.nonzero(obj_sizes)[0].tolist()
     labels = [x for x in labels if x != 0]
     return labels, obj_sizes[labels].tolist()
+

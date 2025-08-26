@@ -1,4 +1,4 @@
-matplotlib==3.3.4
+﻿matplotlib==3.3.4
 setuptools==52.0.0
 albumentations==0.5.2
 PyYAML==6.0

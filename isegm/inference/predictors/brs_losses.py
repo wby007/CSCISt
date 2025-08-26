@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 
 from isegm.model.losses import SigmoidBinaryCrossEntropyLoss
 
@@ -56,3 +56,4 @@ class OracleMaskLoss(torch.nn.Module):
             return 0, 0, 0
 
         return loss, 1.0, 1.0
+

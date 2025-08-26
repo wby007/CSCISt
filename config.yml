@@ -1,4 +1,4 @@
-INTERACTIVE_MODELS_PATH: "./weights"
+﻿INTERACTIVE_MODELS_PATH: "./weights"
 EXPS_PATH: "./outputs"
 
 # Evaluation datasets
@@ -46,3 +46,4 @@ IMAGENET_PRETRAINED_MODELS:
   MAE_BASE_URL: "https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_base.pth"
   MAE_LARGE_URL: "https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_large.pth"
   MAE_HUGE_URL: "https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_huge.pth"
+

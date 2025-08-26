@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import numpy as np
 
 from isegm.utils import misc
@@ -99,3 +99,4 @@ def _compute_iou(pred_mask, gt_mask, ignore_mask=None, keep_ignore=False):
         result = np.full_like(intersection, -1)
         result[nonzero] = iou
         return result
+

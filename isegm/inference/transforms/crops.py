@@ -1,4 +1,4 @@
-import math
+﻿import math
 
 import torch
 import numpy as np
@@ -95,3 +95,4 @@ def get_offsets(length, crop_size, min_overlap_ratio=0.2):
         offsets.append(new_offset)
 
     return offsets
+

@@ -1,4 +1,4 @@
-import os
+﻿import os
 import sys
 import shutil
 import pprint
@@ -185,3 +185,4 @@ def load_config_file(config_path, model_name=None, return_edict=False):
         del cfg['SUBCONFIGS']
 
     return edict(cfg) if return_edict else cfg
+

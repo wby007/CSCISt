@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 
 from typing import List
 from isegm.inference.clicker import Click
@@ -35,3 +35,4 @@ class AddHorizontalFlip(BaseTransform):
 
     def reset(self):
         pass
+

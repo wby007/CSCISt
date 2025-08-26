@@ -1,4 +1,4 @@
-import math
+﻿import math
 import torch.nn as nn
 from isegm.utils.serialization import serialize
 from .is_model import ISModel
@@ -235,5 +235,6 @@ class Fused_Fourier_Conv_Mixer(nn.Module):
         x = self.ca_conv(x_gloal)
         x = self.ca(x) * x
         return x
+
 
 

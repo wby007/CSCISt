@@ -1,4 +1,4 @@
-import matplotlib
+﻿import matplotlib
 matplotlib.use('Agg')
 
 import argparse
@@ -13,17 +13,21 @@ from interactive_demo.app import InteractiveDemoApp
 
 def main():
     args, cfg = parse_args()
+    # 在 demo.py 的 main 函数中，加载 cfg 后添加
+    if not hasattr(cfg, 'INTERACTIVE_MODELS_PATH'):
+        cfg.INTERACTIVE_MODELS_PATH = "./weights"  # 与 config.yml 保持一致
 
     torch.backends.cudnn.deterministic = True
-    checkpoint_path = utils.find_checkpoint(cfg.INTERACTIVE_MODELS_PATH, args.checkpoint)
-    model = utils.load_is_model(checkpoint_path, args.device, args.eval_ritm, lora_checkpoint=args.lora_checkpoint, cpu_dist_maps=True)
+    # checkpoint_path = utils.find_checkpoint(cfg.INTERACTIVE_MODELS_PATH, args.checkpoint)
+    # model = utils.load_is_model(checkpoint_path, args.device, args.eval_ritm, lora_checkpoint=args.lora_checkpoint, cpu_dist_maps=True)
+    model = utils.load_is_model(args.checkpoint, args.device, args.eval_ritm, lora_checkpoint=args.lora_checkpoint,
+                                cpu_dist_maps=True)
 
     root = tk.Tk()
     root.minsize(960, 480)
     app = InteractiveDemoApp(root, args, model)
     root.deiconify()
     app.mainloop()
-
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -63,3 +67,4 @@ def parse_args():
 
 if __name__ == '__main__':
     main()
+

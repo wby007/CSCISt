@@ -1,4 +1,4 @@
-from .embed import PatchEmbed
+﻿from .embed import PatchEmbed
 from .shape_convert import nchw_to_nlc, nlc_to_nchw
 from .wrappers import resize, Upsample
 from .logger import get_root_logger
@@ -11,3 +11,4 @@ __all__ = [
     'get_root_logger', 'BaseDecodeHead', 'BACKBONES', 'HEADS', 'LOSSES', 
     'SEGMENTORS', 'build_backbone', 'build_head', 'build_loss', 'build_segmentor'
 ]
+

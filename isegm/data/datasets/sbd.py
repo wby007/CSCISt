@@ -1,4 +1,4 @@
-import pickle as pkl
+﻿import pickle as pkl
 from pathlib import Path
 import cv2
 import numpy as np
@@ -165,3 +165,4 @@ class SBDEvaluationDataset(ISDataset):
                 pkl.dump(images_and_ids_list, fp)
 
         return images_and_ids_list
+

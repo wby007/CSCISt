@@ -1,4 +1,4 @@
-# Copyright (c) OpenMMLab. All rights reserved.
+﻿# Copyright (c) OpenMMLab. All rights reserved.
 import warnings
 
 import torch.nn as nn
@@ -49,3 +49,4 @@ class Upsample(nn.Module):
         else:
             size = self.size
         return resize(x, size, None, self.mode, self.align_corners)
+

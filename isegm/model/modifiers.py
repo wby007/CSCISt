@@ -1,4 +1,4 @@
-
+﻿
 
 class LRMult(object):
     def __init__(self, lr_mult=1.):
@@ -9,3 +9,4 @@ class LRMult(object):
             m.weight.lr_mult = self.lr_mult
         if getattr(m, 'bias', None) is not None:
             m.bias.lr_mult = self.lr_mult
+

@@ -1,4 +1,4 @@
-import os
+﻿import os
 import logging
 from copy import deepcopy
 from collections import defaultdict
@@ -356,3 +356,4 @@ class ISTrainer(object):
 
         vis = np.concatenate(vis_list, axis=1)
         self.sw.add_image(f'{prefix}/visualization', vis.transpose(2, 0, 1), step)
+

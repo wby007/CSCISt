@@ -1,4 +1,4 @@
-from .base import BasePredictor
+﻿from .base import BasePredictor
 from .sam_predictor import SamPredictor
 from .brs import InputBRSPredictor, FeatureBRSPredictor, HRNetFeatureBRSPredictor
 from .brs_functors import InputOptimizer, ScaleBiasOptimizer
@@ -93,3 +93,4 @@ def get_predictor(net, brs_mode, device,
         raise NotImplementedError
 
     return predictor
+

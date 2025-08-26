@@ -1,4 +1,4 @@
-import io
+﻿import io
 import time
 import logging
 from datetime import datetime
@@ -95,3 +95,4 @@ class ScalarAccumulator(object):
 
     def __len__(self):
         return self.cnt
+

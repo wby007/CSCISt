@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 from functools import partial
 from easydict import EasyDict as edict
 from albumentations import *
@@ -14,5 +14,5 @@ from isegm.utils.lr_decay import CustomMultiStepLR
 from isegm.model import initializer
 
 from isegm.model.is_plainvit_model import PlainVitModel
-from isegm.model.is_plainvit_graco_model_lora import PlainVitModel_lora
-from isegm.model.is_plainvit_graco_two_signal_model_lora import PhraseCLIPGraCoModel_lora
+from isegm.model.is_plainvit_scis_model_lora import PlainVitModel_lora
+from isegm.model.is_plainvit_scis_two_signal_model_lora import PhraseCLIPscisModel_lora

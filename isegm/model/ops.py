@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 from torch import nn as nn
 import numpy as np
 import isegm.model.initializer as initializer
@@ -114,3 +114,4 @@ class BatchImageNormalize:
 
         tensor.sub_(self.mean.to(tensor.device)).div_(self.std.to(tensor.device))
         return tensor
+

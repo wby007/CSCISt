@@ -1,4 +1,4 @@
-import tkinter as tk
+﻿import tkinter as tk
 from tkinter import messagebox, ttk
 
 
@@ -90,3 +90,4 @@ class FocusLabelFrame(ttk.LabelFrame):
                     w.configure(state=state)
 
         set_widget_state(self, state)
+

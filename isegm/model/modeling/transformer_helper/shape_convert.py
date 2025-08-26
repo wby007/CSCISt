@@ -1,4 +1,4 @@
-# Copyright (c) OpenMMLab. All rights reserved.
+﻿# Copyright (c) OpenMMLab. All rights reserved.
 def nlc_to_nchw(x, hw_shape):
     """Convert [N, L, C] shape tensor to [N, C, H, W] shape tensor.
 
@@ -27,3 +27,4 @@ def nchw_to_nlc(x):
     """
     assert len(x.shape) == 4
     return x.flatten(2).transpose(1, 2).contiguous()
+

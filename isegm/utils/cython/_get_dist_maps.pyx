@@ -1,4 +1,4 @@
-import numpy as np
+﻿import numpy as np
 cimport cython
 cimport numpy as np
 from libc.stdlib cimport malloc, free
@@ -61,3 +61,4 @@ def get_dist_maps(np.ndarray[np.float32_t, ndim=2, mode="c"] points,
 
     free(q)
     return dist_maps
+

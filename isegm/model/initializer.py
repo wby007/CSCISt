@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import torch.nn as nn
 import numpy as np
 
@@ -103,3 +103,4 @@ class XavierGluon(Initializer):
             nn.init.normal_(arr, 0, scale)
         else:
             raise ValueError('Unknown random type')
+

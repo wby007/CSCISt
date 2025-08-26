@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import numpy as np
 from tkinter import messagebox
 import cv2
@@ -268,3 +268,4 @@ class InteractiveController:
             heatmap = draw_probmap(prob_map)
             return heatmap
         return None
+

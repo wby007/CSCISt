@@ -1,4 +1,4 @@
-import torch.nn as nn
+﻿import torch.nn as nn
 
 from isegm.model import ops
 
@@ -69,3 +69,4 @@ class SeparableConv2d(nn.Module):
 
     def forward(self, x):
         return self.body(x)
+

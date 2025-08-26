@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import torch.nn.functional as F
 import numpy as np
 from scipy.optimize import fmin_l_bfgs_b
@@ -305,3 +305,4 @@ class InputBRSPredictor(BRSBasePredictor):
                 opt_pred_logits = get_prediction_logits(*opt_vars)
 
         return opt_pred_logits
+

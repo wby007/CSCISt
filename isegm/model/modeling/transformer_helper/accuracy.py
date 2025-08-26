@@ -1,4 +1,4 @@
-# Copyright (c) OpenMMLab. All rights reserved.
+﻿# Copyright (c) OpenMMLab. All rights reserved.
 import torch.nn as nn
 
 
@@ -77,3 +77,4 @@ class Accuracy(nn.Module):
             tuple[float]: The accuracies under different topk criterions.
         """
         return accuracy(pred, target, self.topk, self.thresh)
+

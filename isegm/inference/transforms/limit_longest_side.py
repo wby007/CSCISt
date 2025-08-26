@@ -1,4 +1,4 @@
-from .zoom_in import ZoomIn, get_roi_image_nd
+﻿from .zoom_in import ZoomIn, get_roi_image_nd
 
 
 class LimitLongestSide(ZoomIn):
@@ -20,3 +20,4 @@ class LimitLongestSide(ZoomIn):
 
         tclicks_lists = [self._transform_clicks(clicks_lists[0])]
         return self._roi_image, tclicks_lists
+

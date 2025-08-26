@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import torch.nn.functional as F
 import numpy as np
 from torchvision import transforms
@@ -216,3 +216,4 @@ class BasePredictor(object):
             }
             batched_output.append(res)
         return batched_output
+

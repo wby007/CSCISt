@@ -1,4 +1,4 @@
-# Copyright (c) OpenMMLab. All rights reserved.
+﻿# Copyright (c) OpenMMLab. All rights reserved.
 import functools
 
 import mmcv
@@ -120,3 +120,4 @@ def weighted_loss(loss_func):
         return loss
 
     return wrapper
+

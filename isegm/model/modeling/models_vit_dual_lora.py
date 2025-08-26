@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import torch.nn as nn
 
 from functools import partial
@@ -413,3 +413,4 @@ class VisionTransformer_duallora(nn.Module):
         x = self.pre_logits(x)
         x = self.head(x)
         return x
+

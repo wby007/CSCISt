@@ -1,4 +1,4 @@
-"""
+﻿"""
 Written by Yian Zhao
 """
 
@@ -142,3 +142,4 @@ class SA1BDataset(ISDataset):
         rle = self.annToRLE(ann, height, width)
         m = maskUtils.decode(rle)
         return m
+

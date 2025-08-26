@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
 
 # This source code is licensed under the license found in the
@@ -100,3 +100,4 @@ class ResizeLongestSide:
         neww = int(neww + 0.5)
         newh = int(newh + 0.5)
         return (newh, neww)
+

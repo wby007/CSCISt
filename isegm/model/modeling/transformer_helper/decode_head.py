@@ -1,4 +1,4 @@
-# Copyright (c) OpenMMLab. All rights reserved.
+﻿# Copyright (c) OpenMMLab. All rights reserved.
 from abc import ABCMeta, abstractmethod
 
 import torch
@@ -229,3 +229,4 @@ class BaseDecodeHead(BaseModule, metaclass=ABCMeta):
             ignore_index=self.ignore_index)
         loss['acc_seg'] = accuracy(seg_logit, seg_label)
         return loss
+

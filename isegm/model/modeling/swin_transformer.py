@@ -1,4 +1,4 @@
-# --------------------------------------------------------
+﻿# --------------------------------------------------------
 # Swin Transformer
 # Copyright (c) 2021 Microsoft
 # Licensed under The MIT License [see LICENSE for details]
@@ -722,3 +722,4 @@ class SwinTransfomerSegHead(BaseDecodeHead):
         out = self.cls_seg(out)
 
         return out
+

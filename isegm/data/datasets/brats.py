@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 import cv2
 import numpy as np
@@ -31,3 +31,4 @@ class BraTSDataset(ISDataset):
         instances_mask[instances_mask > 0] = 1
 
         return DSample(image, instances_mask, objects_ids=[1], ignore_ids=[-1], sample_id=index)
+

@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
 
 # This source code is licensed under the license found in the
@@ -126,5 +126,6 @@ def interpolate_pos_embed_inference(model, infer_img_size, device):
 
         model.pos_embed = new_pos_embed
         model.patch_embed.grid_size = infer_grid_size
+
 
 

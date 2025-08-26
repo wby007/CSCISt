@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """ Adopted from https://github.com/foobar167/junkyard/blob/master/manual_image_annotation1/polygon/gui_canvas.py """
 import os
 import sys
@@ -322,3 +322,4 @@ class CanvasImage:
                 self.__scroll_y('scroll', -1, 'unit', event=event)
             elif event.keycode in self.keycodes['s']:  # scroll down, keys 's' or 'Down'
                 self.__scroll_y('scroll', 1, 'unit', event=event)
+

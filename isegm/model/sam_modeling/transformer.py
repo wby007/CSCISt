@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
 
 # This source code is licensed under the license found in the
@@ -238,3 +238,4 @@ class Attention(nn.Module):
         out = self.out_proj(out)
 
         return out
+

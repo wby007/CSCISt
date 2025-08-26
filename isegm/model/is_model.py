@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import torch.nn as nn
 import numpy as np
 
@@ -123,3 +123,4 @@ def split_points_by_order(tpoints: torch.Tensor, groups):
                     for x in group_points]
 
     return group_points
+

@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
 
 # This source code is licensed under the license found in the
@@ -267,3 +267,4 @@ class SamPredictor:
         self.orig_w = None
         self.input_h = None
         self.input_w = None
+

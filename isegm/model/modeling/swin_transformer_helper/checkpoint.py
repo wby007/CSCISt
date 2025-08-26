@@ -1,4 +1,4 @@
-# Copyright (c) Open-MMLab. All rights reserved.
+﻿# Copyright (c) Open-MMLab. All rights reserved.
 import io
 import os
 import os.path as osp

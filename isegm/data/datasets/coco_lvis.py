@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 import pickle
 import random
 import numpy as np
@@ -94,3 +94,4 @@ class CocoLvisDataset(ISDataset):
                 layers[:, :, layer_indx][layers[:, :, layer_indx] == mask_id] = 0
 
         return DSample(image, layers, objects=instances_info)
+

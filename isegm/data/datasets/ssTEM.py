@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 import cv2
 import numpy as np
@@ -36,3 +36,4 @@ class ssTEMDataset(ISDataset):
         objects_ids = [x for x in objects_ids if x != 0]
 
         return DSample(image, label_mask, objects_ids=objects_ids, ignore_ids=[-1], sample_id=index)
+

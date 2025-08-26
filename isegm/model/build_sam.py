@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
 
 # This source code is licensed under the license found in the
@@ -105,3 +105,4 @@ def _build_sam(
             state_dict = torch.load(f)
         sam.load_state_dict(state_dict)
     return sam
+

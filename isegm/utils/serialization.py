@@ -1,4 +1,4 @@
-from functools import wraps
+﻿from functools import wraps
 from copy import deepcopy
 import inspect
 import torch.nn as nn
@@ -111,3 +111,4 @@ def get_class_from_str(class_str):
     for comp in components[1:]:
         mod = getattr(mod, comp)
     return mod
+

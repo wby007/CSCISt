@@ -1,4 +1,4 @@
-# Copyright (c) OpenMMLab. All rights reserved.
+﻿# Copyright (c) OpenMMLab. All rights reserved.
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -197,3 +197,4 @@ class CrossEntropyLoss(nn.Module):
             avg_factor=avg_factor,
             **kwargs)
         return loss_cls
+

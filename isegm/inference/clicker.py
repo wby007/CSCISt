@@ -1,4 +1,4 @@
-import numpy as np
+﻿import numpy as np
 from copy import deepcopy
 import cv2
 
@@ -116,3 +116,4 @@ class Click:
         for k, v in kwargs.items():
             setattr(self_copy, k, v)
         return self_copy
+

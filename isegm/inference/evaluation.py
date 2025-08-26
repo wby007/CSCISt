@@ -1,4 +1,4 @@
-from time import time
+﻿from time import time
 
 import numpy as np
 import torch
@@ -14,7 +14,7 @@ try:
 except NameError:
     from tqdm import tqdm
 
-def evaluate_dataset(dataset, predictor, graco=False, sam_type=None, oracle=False, gra=None, phrase=None,
+def evaluate_dataset(dataset, predictor, scis=False, sam_type=None, oracle=False, gra=None, phrase=None,
                     **kwargs):
     all_ious = []
     start_time = time()
@@ -22,7 +22,7 @@ def evaluate_dataset(dataset, predictor, graco=False, sam_type=None, oracle=Fals
     for index in tqdm(range(len(dataset)), leave=False):
         sample = dataset.get_sample(index)
         for object_id in sample.objects_ids:
-            if graco:
+            if scis:
                 sample_ious, gra_idx = evaluate_sample_oracle(sample.image, sample.gt_mask(object_id), predictor,
                                                               sample_id=index, **kwargs)
             else:
@@ -37,7 +37,7 @@ def evaluate_dataset(dataset, predictor, graco=False, sam_type=None, oracle=Fals
 # import time
 # from tqdm import tqdm
 # 新增，如果照片不存在则跳过
-# def evaluate_dataset(dataset, predictor, graco=False, sam_type=None, oracle=False, gra=None, phrase=None,
+# def evaluate_dataset(dataset, predictor, scis=False, sam_type=None, oracle=False, gra=None, phrase=None,
 #                      **kwargs):
 #     all_ious = []
 #     start_time = time.time()
@@ -48,7 +48,7 @@ def evaluate_dataset(dataset, predictor, graco=False, sam_type=None, oracle=Fals
 #         if sample is None:
 #             continue
 #         for object_id in sample.objects_ids:
-#             if graco:
+#             if scis:
 #                 sample_ious, gra_idx = evaluate_sample_oracle(sample.image, sample.gt_mask(object_id), predictor,
 #                                                               sample_id=index, **kwargs)
 #             else:
@@ -190,3 +190,4 @@ def get_points_nd(clicks_lists):
         total_clicks.append(pos_clicks + neg_clicks)
 
     return total_clicks
+

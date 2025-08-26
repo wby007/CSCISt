@@ -1,4 +1,4 @@
-import argparse
+﻿import argparse
 import pickle
 from pathlib import Path
 
@@ -87,7 +87,7 @@ def parse_args():
     parser.add_argument('--vis-preds', action='store_true', default=False)
     parser.add_argument('--class-name', type=str, default=None)
     parser.add_argument('--part-name', type=str, default=None)
-    parser.add_argument('--graco', action='store_true', default=False)
+    parser.add_argument('--scis', action='store_true', default=False)
     parser.add_argument('--gra', type=float, default=None, help='Granularity slider')
     parser.add_argument('--phrase', type=str, default=None, help='Semantic phrase')
     parser.add_argument('--lora_checkpoint', type=str, default=None)
@@ -183,7 +183,7 @@ def main():
             dataset_results = evaluate_dataset(
                 dataset,
                 predictor,
-                graco=args.graco,
+                scis=args.scis,
                 sam_type=args.sam_type,
                 oracle=args.oracle,
                 gra=args.gra,
@@ -407,3 +407,4 @@ def get_prediction_vis_callback(logs_path, dataset_name, prob_thresh):
 
 if __name__ == '__main__':
     main()
+

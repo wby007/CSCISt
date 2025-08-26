@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import numpy as np
 
 from isegm.model.metrics import _compute_iou
@@ -107,3 +107,4 @@ class ScaleBiasOptimizer(BaseOptimizer):
             scale = torch.sin(scale)
 
         return (1 + scale, bias), reg_loss
+

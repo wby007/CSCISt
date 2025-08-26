@@ -1,4 +1,4 @@
-# Copyright (c) Meta Platforms, Inc. and affiliates.
+﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
 
 # This source code is licensed under the license found in the
@@ -393,3 +393,4 @@ class PatchEmbed(nn.Module):
         # B C H W -> B H W C
         x = x.permute(0, 2, 3, 1)
         return x
+

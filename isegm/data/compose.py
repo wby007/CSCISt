@@ -1,4 +1,4 @@
-import numpy as np
+﻿import numpy as np
 from math import isclose
 from .base import ISDataset
 
@@ -37,3 +37,4 @@ class ProportionalComposeDataset(ISDataset):
         sample_indx = np.random.choice(len(self._datasets[dataset_indx]))
 
         return self._datasets[dataset_indx].get_sample(sample_indx)
+

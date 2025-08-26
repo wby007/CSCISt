@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 import math
 from isegm.utils.log import logger
 import isegm.utils.lr_decay as lrd

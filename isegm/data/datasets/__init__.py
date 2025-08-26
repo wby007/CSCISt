@@ -1,4 +1,4 @@
-from intake import imports
+﻿from intake import imports
 
 from isegm.data.compose import ComposeDataset, ProportionalComposeDataset
 from .berkeley import BerkeleyDataset

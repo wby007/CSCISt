@@ -1,4 +1,4 @@
-import torch
+﻿import torch
 from torch import nn
 from .clip import clip
 
@@ -24,3 +24,4 @@ class ClipTextEncoder(nn.Module):
         # proj
         text_features = self.phrase2gra_proj(text_features)
         return text_features
+

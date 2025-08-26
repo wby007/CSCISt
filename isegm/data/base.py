@@ -1,4 +1,4 @@
-import random
+﻿import random
 import pickle
 import numpy as np
 import torch
@@ -112,3 +112,4 @@ class ISDataset(torch.utils.data.dataset.Dataset):
         }
         print(f'Loaded {len(probs)} weights with gamma={samples_scores_gamma}')
         return samples_scores
+
