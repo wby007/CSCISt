@@ -86,7 +86,7 @@ class PlainVitModel(ISModel):
 
         self.head = SwinTransfomerSegHead(**head_params)
 
-    def backbone_forward(self, image, coord_features=None, gra=None):
+    def backbone_forward(self, image, coord_features=None, gra=None, text=None, category_label=None):
         coord_features = self.patch_embed_coords(coord_features)
         backbone_features = self.backbone.forward_backbone(image, coord_features, gra=gra, shuffle=self.random_split)
 
