@@ -1,19 +1,13 @@
-﻿# -*- coding: utf-8 -*-
-""" Adopted from https://github.com/foobar167/junkyard/blob/master/manual_image_annotation1/polygon/gui_canvas.py """
-import os
+﻿import os
 import sys
 import time
 import math
 import tkinter as tk
-
 from tkinter import ttk
 from PIL import Image, ImageTk
 
 
 def handle_exception(exit_code=0):
-    """ Use: @land.logger.handle_exception(0)
-        before every function which could cast an exception """
-
     def wrapper(func):
         def inner(*args, **kwargs):
             try:
@@ -28,8 +22,6 @@ def handle_exception(exit_code=0):
 
 
 class AutoScrollbar(ttk.Scrollbar):
-    """ A scrollbar that hides itself if it's not needed. Works only for grid geometry manager """
-
     def set(self, lo, hi):
         if float(lo) <= 0.0 and float(hi) >= 1.0:
             self.grid_remove()
@@ -47,24 +39,20 @@ class AutoScrollbar(ttk.Scrollbar):
 
 
 class CanvasImage:
-    """ Display and zoom image """
 
     def __init__(self, canvas_frame, canvas):
-        """ Initialize the ImageFrame """
-        self.current_scale = 1.0  # scale for the canvas image zoom, public for outer classes
-        self.__delta = 1.2  # zoom magnitude
-        self.__previous_state = 0  # previous state of the keyboard
-        # Create ImageFrame in placeholder widget
+        self.current_scale = 1.0
+        self.__delta = 1.2
+        self.__previous_state = 0
         self.__imframe = canvas_frame
-        # Vertical and horizontal scrollbars for canvas
         self.hbar = AutoScrollbar(canvas_frame, orient='horizontal')
         self.vbar = AutoScrollbar(canvas_frame, orient='vertical')
         self.hbar.grid(row=1, column=0, sticky='we')
         self.vbar.grid(row=0, column=1, sticky='ns')
-        # Add scroll bars to canvas
+
         self.canvas = canvas
         self.canvas.configure(xscrollcommand=self.hbar.set, yscrollcommand=self.vbar.set)
-        self.hbar.configure(command=self.__scroll_x)  # bind scrollbars to the canvas
+        self.hbar.configure(command=self.__scroll_x)
         self.vbar.configure(command=self.__scroll_y)
         # Bind events to the Canvas
         self.canvas.bind('<Configure>', lambda event: self.__size_changed())  # canvas is resized
@@ -78,9 +66,7 @@ class CanvasImage:
         self.canvas.bind('<MouseWheel>', self.__wheel)  # zoom for Windows and MacOS, but not Linux
         self.canvas.bind('<Button-5>', self.__wheel)  # zoom for Linux, wheel scroll down
         self.canvas.bind('<Button-4>', self.__wheel)  # zoom for Linux, wheel scroll up
-        
-        # Handle keystrokes in idle mode, because program slows down on a weak computers,
-        # when too many key stroke events in the same time
+
         self.canvas.bind('<Key>', lambda event: self.canvas.after_idle(self.__keystroke, event))
         self.container = None
 
@@ -109,7 +95,6 @@ class CanvasImage:
         self.canvas.focus_set()  # set focus on the canvas
 
     def grid(self, **kw):
-        """ Put CanvasImage widget on the parent widget """
         self.__imframe.grid(**kw)  # place CanvasImage widget on the grid
         self.__imframe.grid(sticky='nswe')  # make frame container sticky
         self.__imframe.rowconfigure(0, weight=1)  # make canvas expandable

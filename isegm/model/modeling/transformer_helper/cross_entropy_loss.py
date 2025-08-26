@@ -1,4 +1,4 @@
-﻿# Copyright (c) OpenMMLab. All rights reserved.
+﻿
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -14,9 +14,7 @@ def cross_entropy(pred,
                   reduction='mean',
                   avg_factor=None,
                   ignore_index=-100):
-    """The wrapper function for :func:`F.cross_entropy`"""
-    # class_weight is a manual rescaling weight given to each class.
-    # If given, has to be a Tensor of size C element-wise losses
+
     loss = F.cross_entropy(
         pred,
         label,

@@ -1,8 +1,4 @@
-﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
-
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+﻿
 
 import numpy as np
 import torch
@@ -19,13 +15,6 @@ class SamPredictor:
         self,
         sam_model: Sam,
     ) -> None:
-        """
-        Uses SAM to calculate the image embedding for an image, and then
-        allow repeated, efficient mask prediction given prompts.
-
-        Arguments:
-          sam_model (Sam): The model to use for mask prediction.
-        """
         super().__init__()
         self.model = sam_model
         self.transform = ResizeLongestSide(sam_model.image_encoder.img_size)

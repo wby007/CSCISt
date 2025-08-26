@@ -1,8 +1,4 @@
-﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
-
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
+﻿
 
 import numpy as np
 import torch
@@ -14,11 +10,7 @@ from typing import Tuple
 
 
 class ResizeLongestSide:
-    """
-    Resizes images to the longest side 'target_length', as well as provides
-    methods for resizing coordinates and boxes. Provides methods for
-    transforming both numpy array and batched torch tensors.
-    """
+
 
     def __init__(self, target_length: int) -> None:
         self.target_length = target_length

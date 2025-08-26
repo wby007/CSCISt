@@ -1,31 +1,11 @@
-﻿# Copyright (c) OpenMMLab. All rights reserved.
+﻿
 import torch.nn.functional as F
 from mmcv.cnn import build_conv_layer, build_norm_layer
 from mmcv.runner.base_module import BaseModule
 from torch.nn.modules.utils import _pair as to_2tuple
 
-
-# Modified from Pytorch-Image-Models
 class PatchEmbed(BaseModule):
-    """Image to Patch Embedding V2.
 
-    We use a conv layer to implement PatchEmbed.
-    Args:
-        in_channels (int): The num of input channels. Default: 3
-        embed_dims (int): The dimensions of embedding. Default: 768
-        conv_type (dict, optional): The config dict for conv layers type
-            selection. Default: None.
-        kernel_size (int): The kernel_size of embedding conv. Default: 16.
-        stride (int): The slide stride of embedding conv.
-            Default: None (Default to be equal with kernel_size).
-        padding (int): The padding length of embedding conv. Default: 0.
-        dilation (int): The dilation rate of embedding conv. Default: 1.
-        pad_to_patch_size (bool, optional): Whether to pad feature map shape
-            to multiple patch size. Default: True.
-        norm_cfg (dict, optional): Config dict for normalization layer.
-        init_cfg (`mmcv.ConfigDict`, optional): The Config for initialization.
-            Default: None.
-    """
 
     def __init__(self,
                  in_channels=3,

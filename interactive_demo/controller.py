@@ -11,10 +11,9 @@ from isegm.utils.vis import draw_probmap
 from isegm.utils.vis import visualize_instances, get_boundaries
 
 class InteractiveController:
-    def __init__(self, net, device, predictor_params, update_image_callback, prob_thresh=0.5, granularity=1.0, phrase=None):
+    def __init__(self, net, device, predictor_params, update_image_callback, prob_thresh=0.5, phrase=None):
         self.net = net
         self.prob_thresh = prob_thresh
-        self.granularity = granularity
         self.phrase = phrase
         self.clicker = clicker.Clicker()
         self.states = []
@@ -71,8 +70,7 @@ class InteractiveController:
             'prev_mask': self._init_mask
         }
 
-        if self.granularity is not None:
-            pred_kwargs['gra'] = self.granularity
+
         if self.phrase is not None:
             pred_kwargs['phrase'] = self.phrase
 

@@ -71,13 +71,10 @@ class InteractiveDemoApp(ttk.Frame):
             },
             'brs_mode': tk.StringVar(value='NoBRS'),
             'prob_thresh': tk.DoubleVar(value=0.5),
-            'granularity': tk.DoubleVar(value=1.0),
             'lbfgs_max_iters': tk.IntVar(value=20),
-            'phrase_input': tk.StringVar(value=''),
             'alpha_blend': tk.DoubleVar(value=0.8),
-            # 'alpha_blend': tk.DoubleVar(value=0.5),
             'click_radius': tk.IntVar(value=5),
-            # 'click_radius': tk.IntVar(value=3),
+
         }
 
     def _add_menu(self):
@@ -172,23 +169,8 @@ class InteractiveDemoApp(ttk.Frame):
         self.lbfgs_iters_entry.grid(row=1, column=2, padx=10, pady=2, sticky='w')
         self.brs_options_frame.columnconfigure((0, 1), weight=1)
 
-        # self.phrase_input_frame = FocusLabelFrame(master, text="Semantic Phrase")
-        self.phrase_input_frame = FocusLabelFrame(master, text="Text Prompt")
-        self.phrase_input_frame.pack(side=tk.TOP, fill=tk.X, padx=10, pady=3)
-        tk.Label(self.phrase_input_frame, text="A photo of a").grid(row=0, column=1, pady=1, sticky='e')
-        BoundedNumericalEntry(self.phrase_input_frame, variable=self.state['phrase_input'],
-                              min_value=None, max_value=None, vartype=str,
-                              name='phrase_input').grid(row=0, column=2, padx=10, pady=1, sticky='w')
-        # tk.Label(self.phrase_input_frame, text="########").grid(row=0, column=1, pady=1, sticky='e')
-        self.phrase_input_button = \
-            FocusButton(self.phrase_input_frame, text='Submit', bg='#ffe599', fg='black', width=10, height=1,
-                        state=tk.NORMAL, command=self._submit_phrase)
-        self.phrase_input_button.grid(row=0, column=3, padx=10, pady=1, sticky='w')
 
-        self.granularity_frame = FocusLabelFrame(master, text="Granularity Slider")
-        self.granularity_frame.pack(side=tk.TOP, fill=tk.X, padx=10, pady=3)
-        FocusHorizontalScale(self.granularity_frame, from_=0.0, to=1.0, command=self._update_granularity,
-                             variable=self.state['granularity']).pack(padx=10, anchor=tk.CENTER)
+
         self.prob_thresh_frame = FocusLabelFrame(master, text="Predictions threshold")
         self.prob_thresh_frame.pack(side=tk.TOP, fill=tk.X, padx=10, pady=3)
         FocusHorizontalScale(self.prob_thresh_frame, from_=0.0, to=1.0, command=self._update_prob_thresh,
@@ -283,18 +265,7 @@ class InteractiveDemoApp(ttk.Frame):
         self.state['prob_thresh'].set(0.5)
         self.controller.reset_last_object()
 
-    def _submit_phrase(self):
-        self.phrase_input = self.state['phrase_input'].get()
-        if self.phrase_input != '':
-            self.controller.phrase = self.phrase_input
-            self.controller.granularity = None
-        else:
-            self.controller.phrase = None
-            self.controller.granularity = self.state['granularity'].get()
 
-    def _update_granularity(self, value):
-        self.controller.granularity = self.state['granularity'].get()
-        self.controller.phrase = None
 
     def _update_prob_thresh(self, value):
         if self.controller.is_incomplete_mask:

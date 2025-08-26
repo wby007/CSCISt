@@ -88,7 +88,6 @@ def parse_args():
     parser.add_argument('--class-name', type=str, default=None)
     parser.add_argument('--part-name', type=str, default=None)
     parser.add_argument('--scis', action='store_true', default=False)
-    parser.add_argument('--gra', type=float, default=None, help='Granularity slider')
     parser.add_argument('--phrase', type=str, default=None, help='Semantic phrase')
     parser.add_argument('--lora_checkpoint', type=str, default=None)
     

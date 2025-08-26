@@ -4,6 +4,8 @@ from isegm.utils.serialization import serialize
 from .is_model import ISModel
 from .modeling.models_vit import VisionTransformer, PatchEmbed
 from .modeling.swin_transformer import SwinTransfomerSegHead
+import torch.nn as nn
+import torch
 
 
 class SimpleFPN(nn.Module):
@@ -51,9 +53,7 @@ class SimpleFPN(nn.Module):
         pass
 
     def forward(self, x):
-        print(f"Input to SimpleFPN: {x.shape}")  # 新增
         x_down_4 = self.down_4(x)   # torch.Size([16, 128, 112, 112])
-        print(f"x_down_4 shape after FFCM2: {x_down_4.shape}")  # 新增
         x_down_8 = self.down_8(x)   # torch.Size([16, 256, 56, 56])
         x_down_16 = self.down_16(x) # torch.Size([16, 512, 28, 28])
         x_down_4 = self.ffcm2(x_down_4)
@@ -106,18 +106,8 @@ class PlainVitModel(ISModel):
 
 
 
-#新增########################################################################################################
-import torch.nn as nn
-import torch
 
 
-# 论文题目：Efficient Frequency-Domain Image Deraining with Contrastive Regularization
-# 中文题目：高效的频域图像去雨带对比度正则化
-# 论文链接：https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/05751.pdf
-# 官方github：https://github.com/deng-ai-lab/FADformer
-# 所属机构：北京航空航天大学航天学院
-# 关键词：SID，频率学习，对比正则化
-# 代码整理：微信公众号《AI缝合术》
 class FourierUnit(nn.Module):
     def __init__(self, in_channels, out_channels, groups=1):
         super(FourierUnit, self).__init__()

@@ -1,8 +1,5 @@
-﻿# Copyright (c) Meta Platforms, Inc. and affiliates.
-# All rights reserved.
+﻿
 
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
 
 import torch
 from torch import nn
@@ -27,18 +24,7 @@ class Sam(nn.Module):
         pixel_mean: List[float] = [123.675, 116.28, 103.53],
         pixel_std: List[float] = [58.395, 57.12, 57.375],
     ) -> None:
-        """
-        SAM predicts object masks from an image and input prompts.
 
-        Arguments:
-          image_encoder (ImageEncoderViT): The backbone used to encode the
-            image into image embeddings that allow for efficient mask prediction.
-          prompt_encoder (PromptEncoder): Encodes various types of input prompts.
-          mask_decoder (MaskDecoder): Predicts masks from the image embeddings
-            and encoded prompts.
-          pixel_mean (list(float)): Mean values for normalizing pixels in the input image.
-          pixel_std (list(float)): Std values for normalizing pixels in the input image.
-        """
         super().__init__()
         self.image_encoder = image_encoder
         self.prompt_encoder = prompt_encoder
@@ -57,44 +43,7 @@ class Sam(nn.Module):
         multimask_output: bool,
         return_logits: bool = False
     ) -> List[Dict[str, torch.Tensor]]:
-        """
-        Predicts masks end-to-end from provided images and prompts.
-        If prompts are not known in advance, using SamPredictor is
-        recommended over calling the model directly.
 
-        Arguments:
-          batched_input (list(dict)): A list over input images, each a
-            dictionary with the following keys. A prompt key can be
-            excluded if it is not present.
-              'image': The image as a torch tensor in 3xHxW format,
-                already transformed for input to the model.
-              'original_size': (tuple(int, int)) The original size of
-                the image before transformation, as (H, W).
-              'point_coords': (torch.Tensor) Batched point prompts for
-                this image, with shape BxNx2. Already transformed to the
-                input frame of the model.
-              'point_labels': (torch.Tensor) Batched labels for point prompts,
-                with shape BxN.
-              'boxes': (torch.Tensor) Batched box inputs, with shape Bx4.
-                Already transformed to the input frame of the model.
-              'mask_inputs': (torch.Tensor) Batched mask inputs to the model,
-                in the form Bx1xHxW.
-          multimask_output (bool): Whether the model should predict multiple
-            disambiguating masks, or return a single mask.
-
-        Returns:
-          (list(dict)): A list over input images, where each element is
-            as dictionary with the following keys.
-              'masks': (torch.Tensor) Batched binary mask predictions,
-                with shape BxCxHxW, where B is the number of input prompts,
-                C is determined by multimask_output, and (H, W) is the
-                original size of the image.
-              'iou_predictions': (torch.Tensor) The model's predictions
-                of mask quality, in shape BxC.
-              'low_res_logits': (torch.Tensor) Low resolution logits with
-                shape BxCxHxW, where H=W=256. Can be passed as mask input
-                to subsequent iterations of prediction.
-        """
         input_images = torch.stack([self.preprocess(x["image"]) for x in batched_input], dim=0)
         image_embeddings = self.image_encoder(input_images)
 
