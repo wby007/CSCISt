@@ -41,7 +41,7 @@ class SimpleFPN(nn.Module):
             nn.GroupNorm(1, out_dims[3]),
             nn.GELU()
         )
-        self.ffcm2 = Fused_Fourier_Conv_Mixer(out_dims[2])
+        self.ffcm2 = Fused_Fourier_Conv_Mixer(out_dims[0])
         self.ffcm3 = Fused_Fourier_Conv_Mixer(out_dims[3])
         self.init_weights()
 
@@ -51,12 +51,15 @@ class SimpleFPN(nn.Module):
         pass
 
     def forward(self, x):
+        print(f"Input to SimpleFPN: {x.shape}")  # 新增
         x_down_4 = self.down_4(x)   # torch.Size([16, 128, 112, 112])
+        print(f"x_down_4 shape after FFCM2: {x_down_4.shape}")  # 新增
         x_down_8 = self.down_8(x)   # torch.Size([16, 256, 56, 56])
         x_down_16 = self.down_16(x) # torch.Size([16, 512, 28, 28])
         x_down_4 = self.ffcm2(x_down_4)
         x_down_32 = self.down_32(x) # torch.Size([16, 1024, 14, 14])
         x_down_32 = self.ffcm3(x_down_32)
+
         return [x_down_4, x_down_8, x_down_16, x_down_32]
 
 
@@ -97,7 +100,7 @@ class PlainVitModel(ISModel):
         backbone_features = backbone_features.transpose(-1,-2).view(B, C, grid_size[0], grid_size[1])
 
         multi_scale_features = self.neck(backbone_features)
-
+        print("backbone_features shape:", backbone_features.shape)
         return {'instances': self.head(multi_scale_features), 'instances_aux': None}
 
 

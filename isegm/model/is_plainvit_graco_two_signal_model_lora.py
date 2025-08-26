@@ -182,16 +182,20 @@ class PhraseCLIPGraCoModel_lora(ISModel):
             text_features=text,  # 传递文本参数
             shuffle=self.random_split
         )
+        print(f"backbone_features shape after backbone: {backbone_features.shape}")  # 新增
 
         # 4. 应用协作注意力机制
         if text_prompt_features is not None:
             backbone_features = self.collaborative_attn(backbone_features, text_prompt_features)
+            print(f"backbone_features shape after collaborative_attn: {backbone_features.shape}")  # 新增
 
         # 5. 提取多尺度特征并输出
         B, N, C = backbone_features.shape
         grid_size = self.backbone.patch_embed.grid_size
         backbone_features = backbone_features.transpose(-1, -2).view(B, C, grid_size[0], grid_size[1])
+        print(f"backbone_features shape before neck: {backbone_features.shape}")  # 新增
         multi_scale_features = self.neck(backbone_features)
+        print(f"multi_scale_features from neck: {[f.shape for f in multi_scale_features]}")  # 新增（如果是列表）
 
         return {'instances': self.head(multi_scale_features), 'instances_aux': None}
 
