@@ -25,10 +25,7 @@ class SBDDataset(ISDataset):
         with open(self.dataset_path / f'{split}.txt', 'r') as f:
             self.dataset_samples = [x.strip() for x in f.readlines()]
         
-        self.partmask_path = partmask_path
-        if partmask_path is not None:
-            with open(partmask_path, 'rb') as f:
-                self.partmask_samples = pkl.load(f)
+
 
             self.gra_probs = self._count_gra(self.partmask_samples)
 
@@ -64,7 +61,7 @@ class SBDDataset(ISDataset):
         if self.partmask_path is not None and image_name in self.partmask_samples.keys():
             part_data = self.partmask_samples[str(image_name)]
             instances_mask, gra = part_data['mask'], part_data['gra']
-            
+
             if isinstance(gra[0], np.ndarray):
                 gra = np.array([round(gs[0] * 0.1 + gs[1] * 0.9, 1) if gs[0] <= 1.0 and abs(gs[1] - gs[0]) < 0.1 else gs[1] for gs in gra])
 

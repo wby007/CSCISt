@@ -27,7 +27,7 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('model_path', type=str, help='Path to the model script.')
+    parser.add_argument('model_path', type=str, default="models/plainvit_base448_scis_mmt_fmg.py",help='Path to the model script.')
 
     parser.add_argument(
         '--exp-name',
@@ -98,7 +98,6 @@ def parse_args():
 
     parser.add_argument('--enable_lora', action='store_true', default=False)
     parser.add_argument('--load_gra', action='store_true', default=False)
-    parser.add_argument('--part_path', type=str, default=None)
     parser.add_argument('--lora_switch_epoch', type=int, default=55)
 
     parser.add_argument('--upsample', type=str, default='x1', help='upsample the output.')

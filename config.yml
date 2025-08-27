@@ -18,8 +18,7 @@ COCOMVal_PATH: "C:/WBY/ProjectCode/0Datasets/COCO_MVal"
 
 # Train datasets
 SBD_PATH: "C:/WBY/ProjectCode/0Datasets/SBD"
-
-COCO_LVIS_PATH: "C:/WBY/ProjectCode/0Datasets/COCO+LVIS-test"
+COCO_LVIS_PATH: "C:/WBY/ProjectCode/0Datasets/COCO+LVIS"
 
 
 

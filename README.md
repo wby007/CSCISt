@@ -1,7 +1,7 @@
 # [Interactive Image Segmentation Based on Semantic Collaboration of Cross-modal Prior Information](https://openaccess.thecvf.com/content/ICCV2023/html/Liu_SimpleClick_Interactive_Image_Segmentation_with_Simple_Vision_Transformers_ICCV_2023_paper.html)
 
 <p align="center">
-  <img src="./assets/img1.png" alt="drawing", width="500"/>
+  <img src="./assets/img1.png" alt="drawing", width="600"/>
 </p>
 
 
@@ -79,6 +79,8 @@ Don't forget to change the paths to the datasets in [config.yml](config.yml) aft
 (*) To prepare COCO+LVIS, you need to download original LVIS v1.0, then download and unpack our 
 pre-processed annotations that are obtained by combining COCO and LVIS dataset into the folder with LVIS v1.0.
 
+## License
+This project is a modified version of [SimpleClick](https://github.com/uncbiag/SimpleClick) (MIT License).
 
 ## License
 The code is released under the MIT License. It is a short, permissive software license. Basically, you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source. 

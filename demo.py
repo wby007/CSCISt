@@ -13,13 +13,10 @@ from interactive_demo.app import InteractiveDemoApp
 
 def main():
     args, cfg = parse_args()
-    # 在 demo.py 的 main 函数中，加载 cfg 后添加
     if not hasattr(cfg, 'INTERACTIVE_MODELS_PATH'):
-        cfg.INTERACTIVE_MODELS_PATH = "./weights"  # 与 config.yml 保持一致
+        cfg.INTERACTIVE_MODELS_PATH = "./weights"
 
     torch.backends.cudnn.deterministic = True
-    # checkpoint_path = utils.find_checkpoint(cfg.INTERACTIVE_MODELS_PATH, args.checkpoint)
-    # model = utils.load_is_model(checkpoint_path, args.device, args.eval_ritm, lora_checkpoint=args.lora_checkpoint, cpu_dist_maps=True)
     model = utils.load_is_model(args.checkpoint, args.device, args.eval_ritm, lora_checkpoint=args.lora_checkpoint,
                                 cpu_dist_maps=True)
 
@@ -32,26 +29,20 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--checkpoint', type=str, required=True,
-                        help='The path to the checkpoint. '
+    parser.add_argument('--checkpoint', default=r"weights\sbd_vit_base.pth", type=str, help='The path to the checkpoint. '
                              'This can be a relative path (relative to cfg.INTERACTIVE_MODELS_PATH) '
                              'or an absolute path. The file extension can be omitted.')
     
-    parser.add_argument('--lora_checkpoint', type=str, required=True,
-                        help='The path to the LoRA checkpoint. ')
+    parser.add_argument('--lora_checkpoint', type=str, default=r"weights\scis_base.pth", help='The path to the LoRA checkpoint. ')
 
-    parser.add_argument('--gpu', type=int, default=0,
-                        help='Id of GPU to use.')
+    parser.add_argument('--gpu', type=int, default=0, help='Id of GPU to use.')
 
-    parser.add_argument('--cpu', action='store_true', default=False,
-                        help='Use only CPU for inference.')
+    parser.add_argument('--cpu', action='store_true', default=False, help='Use only CPU for inference.')
 
-    parser.add_argument('--limit-longest-size', type=int, default=800,
-                        help='If the largest side of an image exceeds this value, '
+    parser.add_argument('--limit-longest-size', type=int, default=800, help='If the largest side of an image exceeds this value, '
                              'it is resized so that its largest side is equal to this value.')
 
-    parser.add_argument('--cfg', type=str, default="config.yml",
-                        help='The path to the config file.')
+    parser.add_argument('--cfg', type=str, default="config.yml", help='The path to the config file.')
 
     parser.add_argument('--eval-ritm', action='store_true', default=False)
 
