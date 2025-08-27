@@ -27,7 +27,7 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('model_path', type=str, default="models/plainvit_base448_scis_mmt_fmg.py",help='Path to the model script.')
+    parser.add_argument('--model_path', type=str, default="models/plainvit_base448_scis.py",help='Path to the model script.')
 
     parser.add_argument(
         '--exp-name',
@@ -96,7 +96,7 @@ def parse_args():
     parser.add_argument(
         '--layerwise-decay', action='store_true', help='layer wise decay for transformer blocks.')
 
-    parser.add_argument('--enable_lora', action='store_true', default=False)
+    parser.add_argument('--enable_lora', action='store_true', default="weights/sbd_vit_base.pth")
     parser.add_argument('--load_gra', action='store_true', default=False)
     parser.add_argument('--lora_switch_epoch', type=int, default=55)
 

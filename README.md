@@ -34,9 +34,7 @@ Before training, please download the [MAE](https://github.com/facebookresearch/m
 
 Use the following code to train a huge model on C+L: 
 ```
-python train.py models/iter_mask/plainvit_huge448_cocolvis_itermask.py \
---batch-size=32 \
---ngpus=4
+python train.py models/iter_mask/plainvit_huge448_cocolvis_itermask.py --batch-size=16
 ```
 
 ## Model weights 
