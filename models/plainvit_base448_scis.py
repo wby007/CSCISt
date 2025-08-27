@@ -92,7 +92,6 @@ def train(model, cfg, model_cfg):
     trainset = SBDDataset(
         cfg.SBD_PATH,
         split='train',
-        partmask_path=cfg.part_path,
         augmentator=train_augmentator,
         min_object_area=80,
         keep_background_prob=0.01,

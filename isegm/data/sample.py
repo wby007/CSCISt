@@ -6,7 +6,7 @@ from albumentations import ReplayCompose
 
 
 class DSample:
-    def __init__(self, image, encoded_masks, points=None, gra=None, prompt=None,
+    def __init__(self, image, encoded_masks, points=None, prompt=None,
                  objects=None, objects_ids=None, ignore_ids=None, sample_id=None):
         self.image = image
         self.target = encoded_masks
@@ -17,7 +17,6 @@ class DSample:
             encoded_masks = encoded_masks[:, :, np.newaxis]
         self._encoded_masks = encoded_masks
         self.points = points
-        self.gra = gra
         self._ignored_regions = []
 
         if objects_ids is not None:
