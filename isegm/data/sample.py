@@ -12,7 +12,6 @@ class DSample:
         self.target = encoded_masks
         self.sample_id = sample_id
         self.prompt = prompt
-
         if len(encoded_masks.shape) == 2:
             encoded_masks = encoded_masks[:, :, np.newaxis]
         self._encoded_masks = encoded_masks
