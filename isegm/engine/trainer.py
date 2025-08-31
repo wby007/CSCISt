@@ -116,8 +116,9 @@ class ISTrainer(object):
         if self.enable_lora:
             lora.mark_only_lora_as_trainable(self.net)
             self.white_list = ["foreground_embeds", "background_embeds",
-                               "text_align_mlp", "collaborative_attn",
-                               "head", "neck"   ]
+                                "text_align_mlp", "collaborative_attn",
+                                "neck", "head"   , "phrase2gra_proj"
+                               ]
 
         if lr_scheduler is not None:
             if isinstance(lr_scheduler, list):

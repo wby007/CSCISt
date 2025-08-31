@@ -185,7 +185,6 @@ def main():
                 scis=args.scis,
                 sam_type=args.sam_type,
                 oracle=args.oracle,
-                gra=args.gra,
                 phrase=args.phrase,
                 pred_thr=args.thresh,
                 max_iou_thr=args.target_iou,
