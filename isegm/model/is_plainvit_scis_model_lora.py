@@ -73,7 +73,7 @@ class PlainVitModel_lora(ISModel):
         self.patch_embed_coords = PatchEmbed(
             img_size= backbone_params['img_size'],
             patch_size=backbone_params['patch_size'], 
-            in_chans=3 if self.with_prev_mask else 2, 
+            in_chans=2 if self.with_prev_mask else 2,
             embed_dim=backbone_params['embed_dim'],
         )
 
@@ -81,9 +81,9 @@ class PlainVitModel_lora(ISModel):
         self.neck = SimpleFPN(**neck_params)
         self.head = SwinTransfomerSegHead(**head_params)
 
-    def backbone_forward(self, image, coord_features=None, gra=None, text=None, category_label=None):
+    def backbone_forward(self, image, coord_features=None,text=None, category_label=None):
         coord_features = self.patch_embed_coords(coord_features)
-        backbone_features = self.backbone.forward_backbone(image, coord_features, gra=gra, shuffle=self.random_split)
+        backbone_features = self.backbone.forward_backbone(image, coord_features,shuffle=self.random_split)
 
         # Extract 4 stage backbone feature map: 1/4, 1/8, 1/16, 1/32
         B, N, C = backbone_features.shape

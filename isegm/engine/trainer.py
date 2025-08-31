@@ -116,19 +116,9 @@ class ISTrainer(object):
         if self.enable_lora:
             lora.mark_only_lora_as_trainable(self.net)
             self.white_list = ["foreground_embeds", "background_embeds",
-                               "text_align_mlp", "collaborative_attn"]
-            for param in self.net.named_parameters():
-                for key in self.white_list:
-                    if key in param[0]:
-                        param[1].requires_grad = True
-        else:
-            self.freeze_list = cfg.freeze_list if cfg.freeze_list is not None else []
-            for param in self.net.named_parameters():
-                for key in self.freeze_list:
-                    if key in param[0]:
-                        param[1].requires_grad = False
+                               "text_align_mlp", "collaborative_attn",
+                               "head", "neck"   ]
 
-        # 学习率调度器
         if lr_scheduler is not None:
             if isinstance(lr_scheduler, list):
                 self.lr_scheduler = torch.optim.lr_scheduler.SequentialLR(
@@ -147,8 +137,6 @@ class ISTrainer(object):
         # 点击模型配置（如果有）
         if self.click_models is not None:
             for click_model in self.click_models:
-                for param in click_model.parameters():
-                    param.requires_grad = False
                 click_model.to(self.device)
                 click_model.eval()
 
@@ -171,20 +159,7 @@ class ISTrainer(object):
         if not self.enable_lora or self.lora_switch_epoch is None:
             return
 
-        if self.current_epoch == self.lora_switch_epoch:
-            logger.info(f"Switching training mode at epoch {self.current_epoch}")
 
-            for param in self.net.parameters():
-                param.requires_grad = True
-            # 冻结主干网络
-            for name, param in self.net.named_parameters():
-                if "backbone.patch_embed" in name or "backbone.blocks" in name:
-                    param.requires_grad = False
-            # 确保关键组件可训练
-            if self.white_list:
-                for name, param in self.net.named_parameters():
-                    if any(key in name for key in self.white_list):
-                        param.requires_grad = True
 
     def run(self, num_epochs, start_epoch=None, validation=True):
         if start_epoch is None:
@@ -223,7 +198,6 @@ class ISTrainer(object):
             loss, losses_logging, splitted_batch_data, outputs = \
                 self.batch_forward(batch_data, epoch=epoch)
 
-            self.optim.zero_grad()
             loss.backward()
             self.optim.step()
 
@@ -279,21 +253,6 @@ class ISTrainer(object):
         losses_logging = defaultdict(list)
 
         self.net.eval()
-        with torch.no_grad():
-            for i, batch_data in enumerate(tbar):
-                loss, losses_batch, splitted_batch_data, outputs = \
-                    self.batch_forward(batch_data, training=False, epoch=epoch)
-
-                val_loss += loss.item()
-                for key, val in losses_batch.items():
-                    losses_logging[key].append(val.item())
-
-                if self.is_master:
-                    if self.image_dump_interval > 0 and (i % (self.image_dump_interval * 10) == 0):
-                        self.save_visualization(splitted_batch_data, outputs,
-                                                epoch * len(self.val_data) + i, prefix='val')
-
-                    tbar.set_description(f'Epoch {epoch}, validation loss {val_loss / (i + 1):.4f}')
 
         if self.is_master:
             avg_val_loss = val_loss / len(self.val_data)

@@ -33,17 +33,14 @@ class ISModel(nn.Module):
         self.dist_maps = DistMaps(norm_radius=norm_radius, spatial_scale=1.0,
                                   cpu_mode=cpu_dist_maps, use_disks=use_disks)
 
-    def forward(self, image, points, gra=None, text=None, category_label=None):
+    def forward(self, image, points, text=None, category_label=None):
         image, prev_mask = self.prepare_input(image)
         coord_features = self.get_coord_features(image, prev_mask, points)
         coord_features = self.maps_transform(coord_features)
 
-        # 根据输入参数路由到不同的backbone_forward调用
-        # 确保所有参数都传递给backbone_forward
         outputs = self.backbone_forward(
             image,
             coord_features,
-            gra=gra,
             text=text,
             category_label=category_label
         )
@@ -72,7 +69,6 @@ class ISModel(nn.Module):
         self,
         image,
         coord_features=None,
-        gra=None,
         text=None,
         category_label=None
     ):
