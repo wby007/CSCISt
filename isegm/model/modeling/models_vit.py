@@ -92,11 +92,6 @@ class PatchEmbed(nn.Module):
         self.norm = norm_layer(embed_dim) if norm_layer else nn.Identity()
 
     def forward(self, x):
-        # B, C, H, W = x.shape
-        # assert H % self.img_size[0] == 0 and W == self.img_size[1], \
-        #     f"Input image size ({H}*{W}) doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
-        # assert C == self.in_chans, \
-        #     f"Input image chanel ({C}) doesn't match model ({self.in_chans})"
         x = self.proj(x)
         if self.flatten:
             x = x.flatten(2).transpose(1, 2)  # BCHW -> BNC
@@ -109,7 +104,7 @@ class VisionTransformer(nn.Module):
     """    
     def __init__(self, img_size=(224,224), patch_size=(16, 16), in_chans=3, num_classes=1000, embed_dim=768, 
                  depth=12, num_heads=12, mlp_ratio=4., qkv_bias=True, pos_drop_rate=0., attn_drop_rate=0., 
-                 proj_drop_rate=0., norm_layer=None, act_layer=None, cls_feature_dim=None, global_pool=False, enable_gra=False):
+                 proj_drop_rate=0., norm_layer=None, act_layer=None, cls_feature_dim=None, global_pool=False):
         super().__init__()
         self.global_pool = global_pool
         self.num_classes = num_classes
@@ -132,9 +127,7 @@ class VisionTransformer(nn.Module):
 
         self.fc_norm = norm_layer(embed_dim)
         
-        self.enable_gra = enable_gra
-        if self.enable_gra:
-            self.gra_embed = nn.Embedding(10, embed_dim)
+
 
         # feature representation for classification
         if cls_feature_dim:
@@ -253,14 +246,10 @@ class VisionTransformer(nn.Module):
 
         return x
 
-    def forward_backbone(self, x, additional_features=None, gra=None, shuffle=False):
+    def forward_backbone(self, x, additional_features=None, shuffle=False):
         x = self.patch_embed(x)
         if additional_features is not None:
             x += additional_features
-        
-        if self.enable_gra and gra is not None:
-            gra_idx = torch.clamp(gra * 10 - 1, 0, 9).long()
-            x += self.gra_embed(gra_idx).repeat(1, x.shape[1], 1)
 
         x = self.pos_drop(x + self.pos_embed[:, 1:])
         num_blocks = len(self.blocks)
@@ -289,7 +278,7 @@ class VisionTransformer(nn.Module):
                 x = self.blocks[i-1](x)
         return x
 
-    def forward(self, x):
+    def forward(self, x, mask=None,):
         x = self.patch_embed(x)
         cls_token = self.cls_token.expand(x.shape[0], -1, -1)
         x = torch.cat((cls_token, x), dim=1)

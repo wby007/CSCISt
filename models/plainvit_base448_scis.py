@@ -23,7 +23,6 @@ def init_model(cfg):
         num_heads=12,
         mlp_ratio=4, 
         qkv_bias=True,
-        enable_gra=True
     )
 
     neck_params = dict(

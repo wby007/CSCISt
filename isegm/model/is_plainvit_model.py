@@ -100,7 +100,6 @@ class PlainVitModel(ISModel):
         backbone_features = backbone_features.transpose(-1,-2).view(B, C, grid_size[0], grid_size[1])
 
         multi_scale_features = self.neck(backbone_features)
-        print("backbone_features shape:", backbone_features.shape)
         return {'instances': self.head(multi_scale_features), 'instances_aux': None}
 
 

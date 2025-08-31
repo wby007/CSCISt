@@ -138,7 +138,7 @@ class PascalPartMMTFMGDataset(ISDataset):
             if instances_mask is not None:
                 instances_mask = self.remove_buggy_masks(index, instances_mask)
                 instances_ids, _ = get_labels_with_sizes(instances_mask)
-                return DSample(image, instances_mask, gra=gra, prompt=prompt, objects_ids=instances_ids,
+                return DSample(image, instances_mask, gra=gra, prompt=prompt, objects_ids=[1],
                                sample_id=index)
 
         # load ann

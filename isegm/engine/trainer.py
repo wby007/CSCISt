@@ -317,7 +317,6 @@ class ISTrainer(object):
         outputs = self.net(
             image=images,
             points=points,
-            mask=masks,
             category_label=category_label
         )
 

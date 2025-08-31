@@ -3,6 +3,8 @@ import torch.nn as nn
 
 from functools import partial
 from collections import OrderedDict
+
+from .models_vit import VisionTransformer
 from .pos_embed import interpolate_pos_embed
 import loralib as lora
 
@@ -106,13 +108,32 @@ class PatchEmbed(nn.Module):
         x = self.norm(x)
         return x
 
+class CoordPatchEmbed(nn.Module):
+    def __init__(self, img_size=(224, 224), patch_size=(16, 16), in_chans=2, embed_dim=768,
+                 norm_layer=None, flatten=True):
+        super().__init__()
+        self.in_chans = in_chans  # 固定为2通道（坐标特征）
+        self.img_size = img_size
+        self.patch_size = patch_size
+        self.grid_size = (img_size[0] // patch_size[0], img_size[1] // patch_size[1])
+        self.num_patches = self.grid_size[0] * self.grid_size[1]
+        self.flatten = flatten
+
+        self.proj = nn.Conv2d(in_chans, embed_dim, kernel_size=patch_size, stride=patch_size)
+        self.norm = norm_layer(embed_dim) if norm_layer else nn.Identity()
+
+    def forward(self, x):
+        x = self.proj(x)  # 输入x为2通道，与卷积层匹配
+        if self.flatten:
+            x = x.flatten(2).transpose(1, 2)  # BCHW -> BNC
+        x = self.norm(x)
+        return x
 
 class VisionTransformer_lora(nn.Module):
-    """ Vision Transformer with support for global average pooling 
-    """    
+
     def __init__(self, img_size=(224,224), patch_size=(16, 16), in_chans=3, num_classes=1000, embed_dim=768, 
-                 depth=12, num_heads=12, mlp_ratio=4., qkv_bias=True, pos_drop_rate=0., attn_drop_rate=0., 
-                 proj_drop_rate=0., norm_layer=None, act_layer=None, cls_feature_dim=None, global_pool=False, enable_gra=False):
+                 depth=12, num_heads=12, mlp_ratio=4., qkv_bias=True, pos_drop_rate=0., attn_drop_rate=0.,
+                 proj_drop_rate=0., norm_layer=None, act_layer=None, cls_feature_dim=None, global_pool=False):
         super().__init__()
         self.global_pool = global_pool
         self.num_classes = num_classes
@@ -134,10 +155,15 @@ class VisionTransformer_lora(nn.Module):
             for _ in range(depth)])
 
         self.fc_norm = norm_layer(embed_dim)
-
-        self.enable_gra = enable_gra
-        if self.enable_gra:
-            self.gra_embed = nn.Embedding(10, embed_dim)
+        norm_layer = norm_layer if norm_layer else partial(nn.LayerNorm, eps=1e-6)
+        self.patch_embed_coords = CoordPatchEmbed(
+            img_size=img_size,
+            patch_size=patch_size,
+            in_chans=2,  # 强制2通道输入
+            embed_dim=embed_dim,
+            norm_layer=norm_layer,
+            flatten=True
+        )
 
         # feature representation for classification
         if cls_feature_dim:
@@ -257,14 +283,14 @@ class VisionTransformer_lora(nn.Module):
 
         return x
 
-    def forward_backbone(self, x, additional_features=None, gra=None, shuffle=False):
+    def forward_backbone(self, x, additional_features=None, shuffle=False, coords=None):
         x = self.patch_embed(x)
+        if coords is not None:
+            coords_embed = self.patch_embed_coords(coords)  # 处理2通道坐标特征
+            x = x + coords_embed  # 融合图像特征和坐标特征
         if additional_features is not None:
             x += additional_features
 
-        if self.enable_gra and gra is not None:
-            gra_idx = torch.clamp(gra * 10 - 1, 0, 9).long()
-            x += self.gra_embed(gra_idx).repeat(1, x.shape[1], 1)
 
         x = self.pos_drop(x + self.pos_embed[:, 1:])
         num_blocks = len(self.blocks)

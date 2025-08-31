@@ -52,7 +52,7 @@ class SimpleFPN(nn.Module):
         x_down_8 = self.down_8(x)
         x_down_16 = self.down_16(x)
         x_down_32 = self.down_32(x)
-        print("Input to neck:", x.shape)
+        # print("Input to neck:", x.shape)
         return [x_down_4, x_down_8, x_down_16, x_down_32]
 
 

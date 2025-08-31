@@ -44,9 +44,7 @@ class DualBranchMergedLinear(nn.Linear, lora.LoRALayer):
             self.lora_B2 = nn.Parameter(
                 self.weight.new_zeros((out_features // len(enable_lora) * sum(enable_lora), r)))
             self.scaling = self.lora_alpha / self.r
-            # Freezing the pre-trained weight matrix
-            self.weight.requires_grad = False
-            # Compute the indices
+
             self.lora_ind = self.weight.new_zeros(
                 (out_features,), dtype=torch.bool
             ).view(len(enable_lora), -1)
@@ -204,8 +202,7 @@ class VisionTransformer_duallora(nn.Module):
 
     def __init__(self, img_size=(224, 224), patch_size=(16, 16), in_chans=3, num_classes=1000, embed_dim=768,
                  depth=12, num_heads=12, mlp_ratio=4., qkv_bias=True, pos_drop_rate=0., attn_drop_rate=0.,
-                 proj_drop_rate=0., norm_layer=None, act_layer=None, cls_feature_dim=None, global_pool=False,
-                 enable_gra=False):
+                 proj_drop_rate=0., norm_layer=None, act_layer=None, cls_feature_dim=None, global_pool=False):
         super().__init__()
         self.global_pool = global_pool
         self.num_classes = num_classes
@@ -228,11 +225,7 @@ class VisionTransformer_duallora(nn.Module):
 
         self.fc_norm = norm_layer(embed_dim)
 
-        self.enable_gra = enable_gra
-        if self.enable_gra:
-            self.gra_embed = nn.Embedding(10, embed_dim)
 
-        # feature representation for classification
         if cls_feature_dim:
             self.num_features = cls_feature_dim
             self.pre_logits = nn.Sequential(OrderedDict([
@@ -349,21 +342,12 @@ class VisionTransformer_duallora(nn.Module):
 
         return x
 
-    def forward_backbone(self, x, additional_features=None, gra=None, text_features=None,
+    def forward_backbone(self, x, additional_features=None, text_features=None,
                          shuffle=False):
         x = self.patch_embed(x)
         if additional_features is not None:
             x += additional_features
 
-        gra_features = None
-        if self.enable_gra and gra is not None:
-            gra_idx = torch.clamp(gra * 10 - 1, 0, 9).long()
-            gra_features = self.gra_embed(gra_idx)
-
-        if gra_features is not None:
-            x += gra_features.repeat(1, x.shape[1], 1)
-            for block in self.blocks:
-                block.attn.qkv.lora_branch = 0
 
         if text_features is not None:
             x += text_features.repeat(1, x.shape[1], 1)

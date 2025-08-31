@@ -118,7 +118,7 @@ class PascalPartDataset(ISDataset):
         if part_name is not None:
             prompt = clip.tokenize(part_name).squeeze(0)
 
-        return DSample(image, instances_mask, gra=gra, prompt=prompt, objects_ids=[1], sample_id=index)
+        return DSample(image, instances_mask, prompt=prompt, objects_ids=[1], sample_id=index)
 
     def _get_gra_list(self, masks, obj_mask):
         obj_area = np.bincount(obj_mask.flatten())[1]

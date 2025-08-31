@@ -60,8 +60,7 @@ class ISDataset(torch.utils.data.dataset.Dataset):
             'points': points.astype(np.float32),
             'instances': mask,
         }
-        if sample.gra is not None:
-            output.update({'gra': torch.from_numpy(np.array([sample.gra]))})
+
 
         if sample.prompt is not None:
             output.update({'text': sample.prompt})

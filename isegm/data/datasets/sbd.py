@@ -24,32 +24,7 @@ class SBDDataset(ISDataset):
 
         with open(self.dataset_path / f'{split}.txt', 'r') as f:
             self.dataset_samples = [x.strip() for x in f.readlines()]
-        
 
-    #
-    #         self.gra_probs = self._count_gra(self.partmask_samples)
-    #
-    # def _count_gra(self, partmask_samples):
-    #     gra_num = {}
-    #     for img_name in partmask_samples.keys():
-    #         gras = partmask_samples[img_name]["gra"]
-    #         for idx in range(gras.shape[0]):
-    #             gra = gras[idx][1]
-    #             gra_num[gra] = gra_num.get(gra, 0) + 1
-    #
-    #     sum_num = 0
-    #     for k, v in gra_num.items():
-    #         if k != 0.0:
-    #             sum_num += v
-    #
-    #     gra_probs = {}
-    #     for k, v in gra_num.items():
-    #         if k != 0.0:
-    #             gra_probs[k] = sum_num / v
-    #     gra_probs[0.0] = 0.
-    #
-    #     return gra_probs
-        
     def get_sample(self, index):
         image_name = self.dataset_samples[index]
         image_path = str(self._images_path / f'{image_name}.jpg')
@@ -57,34 +32,7 @@ class SBDDataset(ISDataset):
 
         image = cv2.imread(image_path)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        
-        # if self.partmask_path is not None and image_name in self.partmask_samples.keys():
-        #     part_data = self.partmask_samples[str(image_name)]
-        #     instances_mask, gra = part_data['mask'], part_data['gra']
-        #
-        #     if isinstance(gra[0], np.ndarray):
-        #         gra = np.array([round(gs[0] * 0.1 + gs[1] * 0.9, 1) if gs[0] <= 1.0 and abs(gs[1] - gs[0]) < 0.1 else gs[1] for gs in gra])
-        #
-        #     if not self.disable_probs:
-        #         gra_num_each, probs = {}, {}
-        #         for g in gra:
-        #             gra_num_each[g] = gra_num_each.get(g, 0) + 1
-        #         for g, cnt in gra_num_each.items():
-        #             probs[g] = self.gra_probs[g] / cnt
-        #         p = []
-        #         for g in gra:
-        #             p.append(probs[g])
-        #         sum_p = sum(p)
-        #         p = [x / sum_p for x in p]
-        #         tgt_idx = np.random.choice(range(gra.shape[0]), p=p)
-        #         instances_mask, gra = instances_mask[tgt_idx], gra[tgt_idx]
-        #     else:
-        #         tgt_idx = np.random.choice(range(gra.shape[0]))
-        #         instances_mask, gra = instances_mask[tgt_idx], gra[tgt_idx]
-        #
-        # else:
-        #     instances_mask = loadmat(str(inst_info_path))['GTinst'][0][0][0].astype(np.int32)
-        #     gra = 1.0
+
         instances_mask = loadmat(str(inst_info_path))['GTinst'][0][0][0].astype(np.int32)
         instances_mask = self.remove_buggy_masks(index, instances_mask)
         instances_ids, _ = get_labels_with_sizes(instances_mask)
