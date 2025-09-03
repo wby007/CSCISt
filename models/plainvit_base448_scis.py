@@ -28,7 +28,6 @@ def init_model(cfg):
     neck_params = dict(
         in_dim=768,
         out_dims=[128, 256, 512, 1024],
-        # out_dims=[192, 384, 768, 1536]
     )
 
     head_params = dict(

@@ -86,14 +86,12 @@ class PlainVitModel(ISModel):
 
         self.backbone = VisionTransformer(**backbone_params)
         self.neck = SimpleFPN(**neck_params)
-
         self.head = SwinTransfomerSegHead(**head_params)
 
-    def backbone_forward(self, image, coord_features=None, gra=None, text=None, category_label=None):
+    def backbone_forward(self, image, coord_features=None, text=None, category_label=None):
         coord_features = self.patch_embed_coords(coord_features)
-        backbone_features = self.backbone.forward_backbone(image, coord_features, gra=gra, shuffle=self.random_split)
+        backbone_features = self.backbone.forward_backbone(image, coord_features, shuffle=self.random_split)
 
-        # Extract 4 stage backbone feature map: 1/4, 1/8, 1/16, 1/32
         B, N, C = backbone_features.shape
         grid_size = self.backbone.patch_embed.grid_size
 
@@ -118,12 +116,10 @@ class FourierUnit(nn.Module):
 
     def forward(self, x):
         batch, c, h, w = x.size()
-        # (batch, c, h, w/2+1, 2)
         ffted = torch.fft.rfft2(x, norm='ortho')
         x_fft_real = torch.unsqueeze(torch.real(ffted), dim=-1)
         x_fft_imag = torch.unsqueeze(torch.imag(ffted), dim=-1)
         ffted = torch.cat((x_fft_real, x_fft_imag), dim=-1)
-        # (batch, c, 2, h, w/2+1)
         ffted = ffted.permute(0, 1, 4, 2, 3).contiguous()
         ffted = ffted.view((batch, -1,) + ffted.size()[3:])
         ffted = self.conv_layer(ffted)  # (batch, c*2, h, w/2+1)

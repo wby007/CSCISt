@@ -34,7 +34,7 @@ class ISTrainer(object):
                  max_num_next_clicks=0,
                  click_models=None,
                  prev_mask_drop_prob=0.0,
-                 use_category_labels=True,  # 启用类别标签
+                 use_category_labels=True,
                  ):
         self.cfg = cfg
         self.model_cfg = model_cfg
@@ -53,12 +53,10 @@ class ISTrainer(object):
         self.lora_switch_epoch = cfg.lora_switch_epoch
         self.current_epoch = cfg.start_epoch
 
-        # 分布式训练配置
         if cfg.distributed:
             cfg.batch_size //= cfg.ngpus
             cfg.val_batch_size //= cfg.ngpus
 
-        # 指标配置
         if metrics is None:
             metrics = []
         self.train_metrics = metrics
@@ -71,7 +69,6 @@ class ISTrainer(object):
         self.task_prefix = ''
         self.sw = None
 
-        # 数据集加载
         self.trainset = trainset
         self.valset = valset
         logger.info(f'Training samples: {trainset.get_samples_number()}')
@@ -91,14 +88,12 @@ class ISTrainer(object):
             num_workers=cfg.workers
         )
 
-        # 优化器配置
         if layerwise_decay:
             self.optim = get_optimizer_with_layerwise_decay(model, optimizer, optimizer_params)
         else:
             self.optim = get_optimizer(model, optimizer, optimizer_params)
         model = self._load_weights(model)
 
-        # 多GPU配置
         if cfg.multi_gpu:
             model = get_dp_wrapper(cfg.distributed)(model, device_ids=cfg.gpu_ids,
                                                     output_device=cfg.gpu_ids[0])
@@ -111,7 +106,6 @@ class ISTrainer(object):
         self.net = model.to(self.device)
         self.lr = optimizer_params['lr']
 
-        # LoRA配置
         self.white_list = None
         if self.enable_lora:
             lora.mark_only_lora_as_trainable(self.net)
@@ -135,7 +129,6 @@ class ISTrainer(object):
 
         self.tqdm_out = TqdmToLogger(logger, level=logging.INFO)
 
-        # 点击模型配置（如果有）
         if self.click_models is not None:
             for click_model in self.click_models:
                 click_model.to(self.device)
@@ -192,6 +185,9 @@ class ISTrainer(object):
             metric.reset_epoch_stats()
 
         self.net.train()
+        trainable_params = [p for p in self.net.parameters() if p.requires_grad]
+        if not trainable_params:
+            raise RuntimeError("No trainable parameters found. Check if layers are frozen.")
         train_loss = 0.0
         for i, batch_data in enumerate(tbar):
             global_step = epoch * len(self.train_data) + i
@@ -239,6 +235,7 @@ class ISTrainer(object):
         if hasattr(self, 'lr_scheduler'):
             self.lr_scheduler.step()
 
+
     def validation(self, epoch):
         if self.sw is None and self.is_master:
             self.sw = SummaryWriterAvg(log_dir=str(self.cfg.LOGS_PATH),
@@ -274,13 +271,20 @@ class ISTrainer(object):
         category_label = batch_data.get('category_labels', None)
 
 
+
         outputs = self.net(
             image=images,
             points=points,
             category_label=category_label
         )
 
-        loss = outputs.get('loss', torch.tensor(0.0, device=self.device))
+        if masks is not None:
+            criterion = torch.nn.BCEWithLogitsLoss()
+            loss = criterion(outputs['instances'], masks)
+        else:
+            loss = torch.tensor(0.0, device=self.device, requires_grad=True)
+
+
         losses_logging = {'overall': loss}
 
         if 'loss_nfl' in outputs:
@@ -300,15 +304,14 @@ class ISTrainer(object):
         return loss, losses_logging, splitted_batch_data, outputs
 
     def save_visualization(self, batch_data, outputs, step, prefix='train'):
-
         img = batch_data['images'][0].cpu().numpy().transpose(1, 2, 0)
         img = (img * 255).astype(np.uint8)
         mask = batch_data['masks'][0].cpu().numpy().squeeze() if batch_data['masks'] is not None else None
-        pred = torch.sigmoid(outputs['instances'][0]).cpu().numpy().squeeze()
+        pred = torch.sigmoid(outputs['instances'][0]).detach().cpu().numpy().squeeze()
 
         vis_list = [img]
-        vis_list.append(draw_probmap(pred, img.shape[:2]))
-        vis_list.append(draw_points(img.shape[:2], batch_data['points'][0].cpu().numpy()))
+        vis_list.append(draw_probmap(pred))
+        vis_list.append(draw_points(img, batch_data['points'][0].cpu().numpy(), color=(0, 255, 0)))
 
         if mask is not None:
             vis_list.append(draw_probmap(mask, img.shape[:2]))

@@ -6,7 +6,6 @@ import numpy as np
 
 def visualize_instances(imask, bg_color=255,
                         boundaries_color=None, boundaries_width=1, boundaries_alpha=0.8):
-                        # boundaries_color=None, boundaries_width=1, boundaries_alpha=0.8):
     num_objects = imask.max() + 1
     palette = get_palette(num_objects)
     if bg_color is not None:
@@ -61,7 +60,6 @@ def visualize_proposals(proposals_info, point_color=(255, 0, 0), point_radius=1)
 
 def draw_probmap(x):
     return cv2.applyColorMap((x * 255).astype(np.uint8), cv2.COLORMAP_HOT)
-    # return cv2.applyColorMap((x * 255).astype(np.uint8), cv2.COLORMAP_BONE)
 
 
 def draw_points(image, points, color, radius=3):
@@ -125,7 +123,6 @@ def draw_with_blend_and_clicks(img, mask=None, alpha=0.6, clicks_list=None, pos_
             alpha * rgb_mask
         result = result.astype(np.uint8)
 
-        # result = (result * (1 - alpha) + alpha * rgb_mask).astype(np.uint8)
 
     if clicks_list is not None and len(clicks_list) > 0:
         pos_points = [click.coords for click in clicks_list if click.is_positive]

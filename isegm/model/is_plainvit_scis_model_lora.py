@@ -52,7 +52,6 @@ class SimpleFPN(nn.Module):
         x_down_8 = self.down_8(x)
         x_down_16 = self.down_16(x)
         x_down_32 = self.down_32(x)
-        # print("Input to neck:", x.shape)
         return [x_down_4, x_down_8, x_down_16, x_down_32]
 
 
@@ -85,7 +84,6 @@ class PlainVitModel_lora(ISModel):
         coord_features = self.patch_embed_coords(coord_features)
         backbone_features = self.backbone.forward_backbone(image, coord_features,shuffle=self.random_split)
 
-        # Extract 4 stage backbone feature map: 1/4, 1/8, 1/16, 1/32
         B, N, C = backbone_features.shape
         grid_size = self.backbone.patch_embed.grid_size
 
