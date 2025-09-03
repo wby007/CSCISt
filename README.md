@@ -20,7 +20,7 @@ Some test images can be found [here](https://github.com/uncbiag/SimpleClick/tree
 ## Evaluation
 Before evaluation, please download the datasets and models, and then configure the path in [config.yml](https://github.com/uncbiag/SimpleClick/blob/v1.0/config.yml).
 
-Use the following code to evaluate the huge model.
+Use the following code to evaluate the model.
 ```
 python evaluate.py --gpu=0 --checkpoint=./weights/simpleclick_models/cocolvis_vit_huge.pth --eval-mode=cvpr --datasets=GrabCut,Berkeley,DAVIS,PascalVOC,SBD,COCO_MVal,ssTEM,BraTS,OAIZIB
 ```
@@ -28,7 +28,7 @@ python evaluate.py --gpu=0 --checkpoint=./weights/simpleclick_models/cocolvis_vi
 ## Training
 Before training, please download the [MAE](https://github.com/facebookresearch/mae) pretrained weights (click to download: [ViT-Base](https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_base.pth), [ViT-Large](https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_large.pth), [ViT-Huge](https://dl.fbaipublicfiles.com/mae/pretrain/mae_pretrain_vit_huge.pth)) and configure the dowloaded path in [config.yml](https://github.com/uncbiag/SimpleClick/blob/main/config.yml).
 
-Use the following code to train a huge model on C+L: 
+Use the following code to train the model.
 ```
 python3 train.py
 ```
