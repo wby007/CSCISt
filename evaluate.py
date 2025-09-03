@@ -19,7 +19,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        'mode',
+        'mode',default='NoBRS',
         choices=['NoBRS', 'RGB-BRS', 'DistMap-BRS', 'f-BRS-A', 'f-BRS-B', 'f-BRS-C'],
         help='')
 
@@ -86,7 +86,6 @@ def parse_args():
     parser.add_argument('--print-ious', action='store_true', default=False)
     parser.add_argument('--vis-preds', action='store_true', default=False)
     parser.add_argument('--class-name', type=str, default=None)
-    parser.add_argument('--part-name', type=str, default=None)
     parser.add_argument('--scis', action='store_true', default=False)
     parser.add_argument('--phrase', type=str, default=None, help='Semantic phrase')
     parser.add_argument('--lora_checkpoint', type=str, default=None)

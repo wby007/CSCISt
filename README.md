@@ -1,4 +1,4 @@
-# [Interactive Image Segmentation Based on Semantic Collaboration of Cross-modal Prior Information](https://openaccess.thecvf.com/content/ICCV2023/html/Liu_SimpleClick_Interactive_Image_Segmentation_with_Simple_Vision_Transformers_ICCV_2023_paper.html)
+# Interactive Image Segmentation Based on Semantic Collaboration of Cross-modal Prior Information
 
 <p align="center">
   <img src="./assets/img1.png" alt="drawing", width="600"/>
@@ -22,11 +22,7 @@ Before evaluation, please download the datasets and models, and then configure t
 
 Use the following code to evaluate the huge model.
 ```
-python scripts/evaluate_model.py NoBRS \
---gpu=0 \
---checkpoint=./weights/simpleclick_models/cocolvis_vit_huge.pth \
---eval-mode=cvpr \
---datasets=GrabCut,Berkeley,DAVIS,PascalVOC,SBD,COCO_MVal,ssTEM,BraTS,OAIZIB
+python evaluate.py --gpu=0 --checkpoint=./weights/simpleclick_models/cocolvis_vit_huge.pth --eval-mode=cvpr --datasets=GrabCut,Berkeley,DAVIS,PascalVOC,SBD,COCO_MVal,ssTEM,BraTS,OAIZIB
 ```
 
 ## Training
@@ -34,7 +30,7 @@ Before training, please download the [MAE](https://github.com/facebookresearch/m
 
 Use the following code to train a huge model on C+L: 
 ```
-python train.py models/iter_mask/plainvit_huge448_cocolvis_itermask.py --batch-size=16
+python3 train.py
 ```
 
 ## Model weights 
