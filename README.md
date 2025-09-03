@@ -34,7 +34,7 @@ python3 train.py
 ```
 
 ## Model weights 
-models: [Google Drive](https://drive.google.com/drive/folders/1zVhZefCjsTBxvyxnYMVnbkrNeRCH6y9Y?usp=sharing)
+models: [Google Drive](https://drive.google.com/drive/folders/1_lKcYPy73_PpjvUCzQH_p8FaHDuY3xg0?usp=sharing)
 
 ## Datasets
 
